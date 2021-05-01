@@ -11,6 +11,10 @@ public class Balda {
             String newWord;
             String initialWord;
             var uniqueWords = new HashSet<String>();
+            int playerOneScore = 0;
+            int playerTwoScore = 0;
+            boolean playerOneInGame = true;
+            boolean playerTwoInGame = true;
             var alphabet = new HashSet<Character>();
 
             System.out.println("Enter game word");
@@ -27,25 +31,45 @@ public class Balda {
                 alphabet.add(c);
             }
 
-            while (!(newWord = reader.readLine()).isBlank()) {
-                boolean wrong = false;
-                for (Character c : newWord.toCharArray()) {
-                    if (!alphabet.contains(c)) {
-                        System.out.println("Wrong character " + c);
-                        wrong = true;
-                        break;
+            boolean playerOneTurn = true;
+            System.out.print("Player1 guess: ");
+            while (playerOneInGame || playerTwoInGame) {
+                while (!(newWord = reader.readLine()).isBlank()) {
+                    boolean wrong = false;
+                    for (Character c : newWord.toCharArray()) {
+                        if (!alphabet.contains(c)) {
+                            System.out.println("Wrong character " + c);
+                            wrong = true;
+                            break;
+                        }
+                    }
+                    if (!wrong) {
+                        if (uniqueWords.contains(newWord)) {
+                            System.out.println("Already guessed word");
+                        } else {
+                            System.out.println("Nice word! Try more.");
+                            if (playerOneTurn) {
+                                playerOneScore++;
+                                System.out.print("Player2 guess: ");
+                                playerOneTurn = !playerTwoInGame && false;
+                            } else {
+                                playerTwoScore++;
+                                System.out.print("Player1 guess: ");
+                                playerOneTurn = playerOneInGameInGame && true;
+                            }
+                            uniqueWords.add(newWord);
+                        }
                     }
                 }
-                if (!wrong) {
-                    if (uniqueWords.contains(newWord)) {
-                        System.out.println("Already guessed word");
-                    } else {
-                        System.out.println("Nice word! Try more.");
-                        uniqueWords.add(newWord);
-                    }
+                if (playerOneTurn) {
+                    System.out.println("Nice game Player1! Words matched: " + playerOneScore);
+                    playerOneInGame = false;
+                } else {
+                    System.out.println("Nice game Player2! Words matched: " + playerTwoScore);
+                    playerTwoInGame = false;
                 }
             }
-            System.out.println("Nice game! Words matched: " + uniqueWords.size());
+
         } catch (IOException ignored) {
 
         }
