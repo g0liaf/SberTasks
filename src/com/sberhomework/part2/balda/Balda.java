@@ -50,13 +50,12 @@ public class Balda {
                             System.out.println("Nice word! Try more.");
                             if (playerOneTurn) {
                                 playerOneScore++;
-                                System.out.print("Player2 guess: ");
-                                playerOneTurn = !playerTwoInGame && false;
+                                playerOneTurn = !playerTwoInGame;
                             } else {
                                 playerTwoScore++;
-                                System.out.print("Player1 guess: ");
-                                playerOneTurn = playerOneInGameInGame && true;
+                                playerOneTurn = playerOneInGame;
                             }
+                            System.out.print(playerOneTurn ? "Player1 guess: " : "Player2 guess: ");
                             uniqueWords.add(newWord);
                         }
                     }
@@ -64,10 +63,13 @@ public class Balda {
                 if (playerOneTurn) {
                     System.out.println("Nice game Player1! Words matched: " + playerOneScore);
                     playerOneInGame = false;
+                    playerOneTurn = false;
                 } else {
                     System.out.println("Nice game Player2! Words matched: " + playerTwoScore);
                     playerTwoInGame = false;
+                    playerOneTurn = true;
                 }
+                System.out.print(playerOneTurn ? "Player1 guess: " : "Player2 guess: ");
             }
 
         } catch (IOException ignored) {
